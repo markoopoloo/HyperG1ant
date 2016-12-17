@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "619967459633",
+    "firebase_url": "https://hyperg1ant-1a512.firebaseio.com",
+    "project_id": "hyperg1ant-1a512",
+    "storage_bucket": "hyperg1ant-1a512.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619967459633:android:5639ec1dce3471be",
+        "android_client_info": {
+          "package_name": "com.markopaivarinta.hyperg1ant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "619967459633-mrervcr8thl824dcguku6dddd7jb7ki8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZSL-9TwMsBl0o3IxmQ1Y2LjN94Z0Z020"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
