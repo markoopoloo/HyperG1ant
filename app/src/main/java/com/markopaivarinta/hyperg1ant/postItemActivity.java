@@ -56,7 +56,7 @@ public class postItemActivity extends AppCompatActivity implements
     Manager manager;
     Database database;
     Document document;
-    String dbname = "hyperg1ant";
+    //String dbname = "hyperg1ant";
 
     GoogleApiClient googleApiClient;
     FusedLocationProviderApi fusedLocationProviderApi;
@@ -73,6 +73,12 @@ public class postItemActivity extends AppCompatActivity implements
     StorageReference storageRef = mStorage.getReferenceFromUrl("gs://hyperg1ant-1a512.appspot.com");
     Uri picUri;
 
+    String dbname = "hyperg1ant";
+    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    Calendar calendar = GregorianCalendar.getInstance();
+    String currentTimeString = dateFormatter.format(calendar.getTime());
+
+    String docItemForSaleId = "itemForSale" + ".";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -99,16 +105,6 @@ public class postItemActivity extends AppCompatActivity implements
 
         btPostItem = (Button) findViewById(R.id.btSubmit);
 
-        btPostItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("message", "Item posted!");
-                Intent intent1 = (new Intent(postItemActivity.this, MainActivity.class).putExtras(bundle));
-                startActivity(intent1);
-                finish();
-            }
-        });
     }
 
     private void dispatchTakePictureIntent() {
@@ -208,6 +204,39 @@ public class postItemActivity extends AppCompatActivity implements
     public void onConnected(Bundle bundle) {
         currentLocation = fusedLocationProviderApi.getLastLocation(googleApiClient);
         if (currentLocation != null) {
+
+            btPostItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("message", "Item posted!");
+                    Intent intent1 = (new Intent(postItemActivity.this, MainActivity.class).putExtras(bundle));
+
+
+
+                    Map<String, Object> docContent1 = new HashMap<String, Object>();
+                    docContent1.put("title", tbTitle.getText());
+                    docContent1.put("price", tbPrice.getText());
+                    docContent1.put("description", tbDescription.getText());
+                    docContent1.put("itemListedDate", currentTimeString);
+                    docContent1.put("latitude", currentLocation.getLatitude());
+                    docContent1.put("longitude", currentLocation.getLongitude());
+                    docContent1.put("contactInfo", tbContact.getText());
+                    docContent1.put("imageURL", "");
+                    document = database.getDocument(docItemForSaleId + UUID.randomUUID().toString());
+                    try {
+                        document.putProperties(docContent1);
+                        Log.d(TAG, "Document written to database named " + dbname + " with ID = " + document.getId());
+                    } catch (CouchbaseLiteException e) {
+                        Log.e(TAG, "Cannot write document to database", e);
+                    }
+
+                    startActivity(intent1);
+                    finish();
+
+                }
+            });
+
         }
     }
 
